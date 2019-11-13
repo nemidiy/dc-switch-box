@@ -1,0 +1,3 @@
+.pio
+venv/
+etc/device_config.json
