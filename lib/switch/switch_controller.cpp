@@ -39,7 +39,7 @@ bool SwitchController::add_switch(
     conf->toggle_pin = toggle_pin;
     conf->on = false;
     conf->bounce.attach(toggle_pin);
-    conf->bounce.interval(100);
+    conf->bounce.interval(50);
 
     switches.insert(std::make_pair(name, conf));
 
@@ -75,6 +75,7 @@ bool SwitchController::add_switch(
 
 
 void SwitchController::loop(){
+
     for (auto& kv: switches){
         auto conf = kv.second;
         conf->bounce.update();
@@ -88,7 +89,7 @@ void SwitchController::loop(){
                   .send(bool_to_string(conf->on));
         }
     }
-    
+
     // advertise status
     if (millis() - this->last_sent >= this->INTERVAL * 1000UL
             || this->last_sent == 0) {
